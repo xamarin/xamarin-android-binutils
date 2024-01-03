@@ -1,0 +1,23 @@
+<Project>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="1.0.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <Target Name="AddFilesToSign" >
+    <ItemGroup>
+      <FilesToSign Include="$(IntermediateOutputPath)darwin\bin\**">
+        <Authenticode>MacDeveloperVNextHarden</Authenticode>
+        <Zip>true</Zip>
+      </FilesToSign>
+      <FilesToSign Include="$(IntermediateOutputPath)darwin\lib\**">
+        <Authenticode>MacDeveloperVNext</Authenticode>
+        <Zip>true</Zip>
+      </FilesToSign>
+      <FilesToSign Include="$(IntermediateOutputPath)windows\**\*.exe">
+        <Authenticode>Microsoft400</Authenticode>
+      </FilesToSign>
+    </ItemGroup>
+  </Target>
+
+</Project>
