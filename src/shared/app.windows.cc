@@ -1,19 +1,16 @@
 // SPDX-License-Identifier: MIT
+#include <filesystem>
+
 #include <windows.h>
 #include <shlwapi.h>
 
-#include <algorithm>
-#include <cstring>
-#include <iostream>
-#include <string>
-
-#include "constants.hh"
+#include "app.hh"
 #include "exceptions.hh"
-#include "gas.hh"
 
-using namespace xamarin::android::gas;
+using namespace xamarin::android::binutils;
+namespace fs = std::filesystem;
 
-void Gas::get_command_line (int &argc, char **&argv)
+void App::get_command_line (int &argc, char **&argv)
 {
 	LPWSTR *argvw = CommandLineToArgvW (GetCommandLineW (), &argc);
 	argv = new char*[argc + 1];
@@ -27,7 +24,7 @@ void Gas::get_command_line (int &argc, char **&argv)
 	argv [argc] = NULL;
 }
 
-void Gas::determine_program_dir ([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
+void App::determine_program_dir ([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
 {
 	TCHAR buffer[MAX_PATH + 1]{};
 	constexpr DWORD bufSize = sizeof(buffer) / sizeof(*buffer);

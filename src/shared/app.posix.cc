@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: MIT
-#include <libgen.h>
-#include <cstring>
+#include <filesystem>
 
-#include "gas.hh"
+#include "app.hh"
 
-using namespace xamarin::android::gas;
+using namespace xamarin::android::binutils;
+namespace fs = std::filesystem;
 
-void Gas::get_command_line ([[maybe_unused]] int &argc, [[maybe_unused]] char **&argv)
+void App::get_command_line ([[maybe_unused]] int &argc, [[maybe_unused]] char **&argv)
 {
+	// no-op
 }
 
-void Gas::determine_program_dir ([[maybe_unused]] int argc, char **argv)
+void App::determine_program_dir ([[maybe_unused]] int argc, char **argv)
 {
 	fs::path program_path { argv[0] };
 

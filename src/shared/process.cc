@@ -4,7 +4,7 @@
 
 #include "process.hh"
 
-using namespace xamarin::android::gas;
+using namespace xamarin::android::binutils;
 
 void Process::print_process_command_line ()
 {
@@ -18,15 +18,16 @@ void Process::print_process_command_line ()
 std::vector<std::string::const_pointer> Process::make_exec_args ()
 {
 	std::vector<std::string::const_pointer> exec_args;
+	std::string const& epath = _program_name.empty() ? executable_path.string () : _program_name;
 
-	const char *const epath = executable_path.string ().c_str ();
 	exec_args.push_back (
 #if defined(_WIN32)
-		_strdup (epath)
+		_strdup (epath.c_str())
 #else
-		strdup (epath)
+		strdup (epath.c_str ())
 #endif
 	);
+
 	for (std::string const& arg : _args) {
 		exec_args.push_back (arg.c_str ());
 	}
@@ -37,7 +38,7 @@ std::vector<std::string::const_pointer> Process::make_exec_args ()
 void Process::append_program_argument (std::string const& option_name, std::string const& option_value)
 {
 	if (option_value.empty ()) {
-		_args.push_back (option_name);
+		_args.push_back (std::string { option_name });
 		return;
 	}
 
